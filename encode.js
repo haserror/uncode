@@ -27,7 +27,9 @@ $(function(){
 		encoded = encoded.replace(/2/g, word[2]);
 		encoded = encoded.replace(/3/g, word[3]);
 
+		$("#decoded_txt").val("");
 		$("#encoded_txt").val(encoded);
+		
 
 	})
 
@@ -74,6 +76,7 @@ $(function(){
 			decoded += c;
 		}
 
+		$("#encoded_txt").val("");
 		$("#decoded_txt").val(decoded);
 	})
 });
