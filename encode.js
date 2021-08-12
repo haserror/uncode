@@ -2,16 +2,21 @@ $(function(){
 	$("#encode").click(function () {
 		var word = $("#word").val().split('');
 		if (word.length != 4) {
-			alert('○○は4文字にしてね')
+			alert('○○は4文字にしてね');
 			return;
 		}
 		let s = new Set(word);
 		if (s.size != word.length) {
-			alert('○○は全部違う文字にしてね')
+			alert('○○は全部違う文字にしてね');
 			return;
 		}
 		
 		var decoded = $("#decoded_txt").val();
+		if (decoded.length == 0) {
+			alert('変換前文章が空だよ');
+			return;
+		}
+
 		var encoded = "";
 		for (var i = 0; i < decoded.length; i++){
 			var ascii = decoded.charCodeAt(i);
@@ -37,25 +42,25 @@ $(function(){
 		var word = $("#word").val().split('');
 		var word = $("#word").val().split('');
 		if (word.length != 4) {
-			alert('○○は4文字にしてね')
+			alert('○○は4文字にしてね');
 			return;
 		}
 		let s = new Set(word);
 		if (s.size != word.length) {
-			alert('○○は全部違う文字にしてね')
+			alert('○○は全部違う文字にしてね');
 			return;
 		}
 
 		var encoded = $("#encoded_txt").val();
-		if (encoded.length % 8 != 0) {
-			alert('文字数が不正でデコードできないよ')
+		if (encoded.length == 0 || encoded.length % 8 != 0) {
+			alert('文字数が不正でデコードできないよ');
 			return;
 		}
 
 		var regExp = new RegExp(word[0] + '|' + word[1] + '|' + word[2] + '|' +  word[3], "g");
 		var valid = encoded.replace(regExp, '');
 		if (valid.length != 0) {
-			alert('不正な文字が入ってるのでデコードできないよ')
+			alert('不正な文字が入ってるのでデコードできないよ');
 			return;
 		}
 
