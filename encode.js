@@ -50,7 +50,7 @@ $(function(){
 			return;
 		}
 
-		var regExp = new RegExp(word[0] | word[1] | word[2] | word[3], "g");
+		var regExp = new RegExp(word[0] + '|' + word[1] + '|' + word[2] + '|' +  word[3], "g");
 		var valid = encoded.replace(regExp, '');
 		if (valid.length != 0) {
 			alert('不正な文字が入ってるのでデコードできないよ')
