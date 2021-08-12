@@ -19,33 +19,39 @@
 			<p class="lead"><input id="word" type="text" value="うんこー" maxlength="4" style="width:4em;">でエンコードします</p>
 		</div>
 
-		<div class=" container-sm">
-			<div class="card mb-4 shadow-sm">
-				<div class="card-header">
-					<h4 class="my-0 fw-normal">変換前</h4>
-				</div>
-				<div class="card-body">
-					<textarea id="decoded_txt" cols="34" rows="5" style="width:100%">エンコードしたい文字列を入力してね</textarea>
-				</div>
-			</div>
-		</div>
 
-		<div class="container-sm mb-4 ">
-			<div class="d-grid gap-2 mx-auto">
-				<button id="encode" type="button" class="btn btn-lg btn-outline-primary">変換</button>
-				<button id="decode" type="button" class="btn btn-lg btn-outline-primary">もどす</button>
-			</div>
-		</div>
 
-		<div class="container-sm">
-			<div class="card mb-4 shadow-sm">
-				<div class="card-header">
-					<h4 class="my-0 fw-normal">変換後</h4>
-				</div>
-				<div class="card-body">
-					<textarea id="encoded_txt" cols="34" rows="5" style="width:100%"></textarea>
+		<div class="row">
+
+			<div class="col-md-5 col-sm-12">
+				<div class="card mb-4 shadow-sm">
+					<div class="card-header">
+						<h4 class="my-0 fw-normal">変換前</h4>
+					</div>
+					<div class="card-body">
+						<textarea id="decoded_txt" cols="34" rows="5" style="width:100%">エンコードしたい文字列を入力してね</textarea>
+					</div>
 				</div>
 			</div>
+
+			<div class="col-md-2 col-sm-12 mb-4 ">
+				<div class="d-grid gap-2 mx-auto">
+					<button id="encode" type="button" class="btn btn-lg btn-outline-primary">変換</button>
+					<button id="decode" type="button" class="btn btn-lg btn-outline-primary">もどす</button>
+				</div>
+			</div>
+
+			<div class="col-md-5 col-sm-12">
+				<div class="card mb-4 shadow-sm">
+					<div class="card-header">
+						<h4 class="my-0 fw-normal">変換後</h4>
+					</div>
+					<div class="card-body">
+						<textarea id="encoded_txt" cols="34" rows="5" style="width:100%"></textarea>
+					</div>
+				</div>
+			</div>
+
 		</div>
 
 
