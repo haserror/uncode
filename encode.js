@@ -1,29 +1,46 @@
-$(function(){
+$(function () {
+
+	$("#word").change(function () {
+		var word = $("#word").val();
+		if (word.length != 4) {
+			return;
+		}
+		if (word.slice(-1) == "ー") {
+			// 4文字にするために最後に伸ばし棒入れがちなので
+			word = word.substring(0, 3);
+		}
+		$("#title_msg").text(word + "製造機");
+	});
+
 	$("#encode").click(function () {
+		// validate
+		$("#alert_msg").css('display', 'none');
 		var word = $("#word").val().split('');
 		if (word.length != 4) {
-			alert('○○は4文字にしてね');
+			$("#alert_msg").text("製造物は4文字にしてね");
+			$("#alert_msg").show();
 			return;
 		}
 		let s = new Set(word);
 		if (s.size != word.length) {
-			alert('○○は全部違う文字にしてね');
+			$("#alert_msg").text("製造物は全部違う文字にしてね");
+			$("#alert_msg").show();
 			return;
 		}
-		
 		var decoded = $("#decoded_txt").val();
 		if (decoded.length == 0) {
-			alert('変換前文章が空だよ');
+			$("#alert_msg").text("変換前文章が空だよ");
+			$("#alert_msg").show();
 			return;
 		}
 
+		// encode
 		var encoded = "";
 		for (var i = 0; i < decoded.length; i++){
-			var ascii = decoded.charCodeAt(i);
-			var quat = ascii.toString(4);
-			while (quat.length < 8) {
-				quat = "0" + quat;
-			}
+			var charCode = decoded.charCodeAt(i);
+			var quat = charCode.toString(4);
+			// 65536 == 4^8
+			quat = quat.padStart(8, '0');
 			encoded += quat;
 		}
 
@@ -32,38 +49,42 @@ $(function(){
 		encoded = encoded.replace(/2/g, word[2]);
 		encoded = encoded.replace(/3/g, word[3]);
 
+		// decoded → encoded
 		$("#decoded_txt").val("");
 		$("#encoded_txt").val(encoded);
-		
-
 	})
 
+
 	$("#decode").click(function () {
-		var word = $("#word").val().split('');
+		// validate
+		$("#alert_msg").css('display', 'none');
 		var word = $("#word").val().split('');
 		if (word.length != 4) {
-			alert('○○は4文字にしてね');
+			$("#alert_msg").text("製造物は4文字にしてね");
+			$("#alert_msg").show();
 			return;
 		}
 		let s = new Set(word);
 		if (s.size != word.length) {
-			alert('○○は全部違う文字にしてね');
+			$("#alert_msg").text("製造物は全部違う文字にしてね");
+			$("#alert_msg").show();
 			return;
 		}
-
 		var encoded = $("#encoded_txt").val();
 		if (encoded.length == 0 || encoded.length % 8 != 0) {
-			alert('文字数が不正でデコードできないよ');
+			$("#alert_msg").text("文字数が不正でデコードできないよ");
+			$("#alert_msg").show();
 			return;
 		}
-
 		var regExp = new RegExp(word[0] + '|' + word[1] + '|' + word[2] + '|' +  word[3], "g");
 		var valid = encoded.replace(regExp, '');
 		if (valid.length != 0) {
-			alert('不正な文字が入ってるのでデコードできないよ');
+			$("#alert_msg").text("不正な文字が入ってるのでデコードできないよ");
+			$("#alert_msg").show();
 			return;
 		}
 
+		// decode
 		regExp = new RegExp(word[0], "g");
 		encoded = encoded.replace(regExp, '0');
 		regExp = new RegExp(word[1], "g");
@@ -76,11 +97,12 @@ $(function(){
 		var decoded = "";
 		for (var i = 0; i < encoded.length; i += 8) {
 			var quat = encoded.substring(i, i + 8);
-			var ascii = parseInt(quat, 4);
-			var c = String.fromCharCode(ascii);
+			var charCode = parseInt(quat, 4);
+			var c = String.fromCharCode(charCode);
 			decoded += c;
 		}
 
+		// decoded ← encoded
 		$("#encoded_txt").val("");
 		$("#decoded_txt").val(decoded);
 	})
