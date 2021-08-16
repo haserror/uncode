@@ -1,21 +1,26 @@
 $(function () {
 
 	$("#word").change(function () {
-		var word = $("#word").val();
-		if (word.length != 4) {
+		var word = Array.from($("#word").val());
+		if (word.length < 4) {
 			return;
 		}
-		if (word.slice(-1) == "ー") {
-			// 4文字にするために最後に伸ばし棒入れがちなので
-			word = word.substring(0, 3);
+		else if (word.length > 4) {
+			$("#word").val(word[0] + word[1] + word[2] + word[3]);
+			return;
 		}
-		$("#title_msg").text(word + "製造機");
+		var title = word[0] + word[1] + word[2];
+		if (word[3] != "ー") {
+			// 4文字にするために最後に伸ばし棒入れがちなので
+			title += word[3];
+		}
+		$("#title_msg").text(title + "製造機");
 	});
 
 	$("#encode").click(function () {
 		// validate
 		$("#alert_msg").css('display', 'none');
-		var word = $("#word").val().split('');
+		var word = Array.from($("#word").val());
 		if (word.length != 4) {
 			$("#alert_msg").text("製造物は4文字にしてね");
 			$("#alert_msg").show();
@@ -58,7 +63,7 @@ $(function () {
 	$("#decode").click(function () {
 		// validate
 		$("#alert_msg").css('display', 'none');
-		var word = $("#word").val().split('');
+		var word = Array.from($("#word").val());
 		if (word.length != 4) {
 			$("#alert_msg").text("製造物は4文字にしてね");
 			$("#alert_msg").show();
@@ -71,7 +76,8 @@ $(function () {
 			return;
 		}
 		var encoded = $("#encoded_txt").val();
-		if (encoded.length == 0 || encoded.length % 8 != 0) {
+		// サロゲートペア文字対応
+		if (encoded.length == 0 || encoded.replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, '+').length % 8 != 0) {
 			$("#alert_msg").text("文字数が不正でデコードできないよ");
 			$("#alert_msg").show();
 			return;
